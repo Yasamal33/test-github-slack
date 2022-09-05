@@ -7,8 +7,7 @@ jobs:
     steps:
       - name: Action 1
         run: pwd
-      - name: Action 2
-        run: pwddd
+
       
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
