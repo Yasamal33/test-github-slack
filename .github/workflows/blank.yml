@@ -7,25 +7,25 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
     steps:
-#     - name: Slack Notification
-#       uses: act10ns/slack@v1
-#       with: 
-#         status: starting
-#         channel: '#github-actions-test'
-#         message: Starting Build and Deploy...
-#       if: always()
-
-#     - name: Slack Notification
-#       uses: act10ns/slack@v1
-#       with: 
-#         status: ${{ job.status }}
-#         channel: '#github-actions-test'
-#         message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
-#       if: always()
-      
-    - uses: ravsamhq/notify-slack-action@v2
+    - name: Slack Notification
+      uses: act10ns/slack@v1
+      with: 
+        status: starting
+        channel: '#github-actions-test'
+        message: Starting Build and Deploy...
       if: always()
-      with:
-        status: ${{ job.status }} # required
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+
+    - name: Slack Notification
+      uses: act10ns/slack@v1
+      with: 
+        status: ${{ job.status }}
+        channel: '#github-actions-test'
+        message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
+      if: always()
+      
+#     - uses: ravsamhq/notify-slack-action@v2
+#       if: always()
+#       with:
+#         status: ${{ job.status }} # required
+#       env:
+#         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
