@@ -1,6 +1,15 @@
 name: Slack Notification Demo2
-on: [push,fork,pull_request]
+on: [push,pull_request]
 jobs:
+  slackNotificationTest:
+    name: PWD-TEST
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action 1
+        run: pwd
+      - name: Action 2
+        run: pwddd
+      
   slackNotification:
     name: Slack Notification
     runs-on: ubuntu-latest
@@ -10,6 +19,9 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        MSG_MINIMAL: true
+        SLACK_USERNAME: 'Github actions notification'
+        
         
 # name: GitHub Actions Demo
 # on: [push,fork,pull_request]
