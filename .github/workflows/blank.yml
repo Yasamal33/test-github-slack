@@ -1,33 +1,10 @@
-name: Slack Notification Demo2
-on: [push,pull_request]
+name: GitHub Actions Demo
+on: [push,fork,pull_request]
 jobs:
-  slackNotificationTest:
-    name: PWD-TEST
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Action 1
-        run: pwd
-
-      
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: general
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Post Title
-          SLACK_USERNAME: rtCamp
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-        
-# name: GitHub Actions Demo
-# on: [push,fork,pull_request]
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     env:
-#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
 #     steps:
 #     - name: Slack Notification
@@ -45,11 +22,13 @@ jobs:
 #         channel: '#github-actions-test'
 #         message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
 #       if: always()
-      
-#     - uses: ravsamhq/notify-slack-action@v2
-#       if: always()
-#       with:
-#         status: ${{ job.status }} # required
-#       env:
-#         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+
+    steps:
+    - name: Slack Notification
+    - uses: ravsamhq/notify-slack-action@v2
+      if: always()
+      with:
+        status: ${{ job.status }} # required
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
 
