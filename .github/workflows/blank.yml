@@ -1,27 +1,40 @@
-name: GitHub Actions Demo
+name: Slack Notification Demo
 on: [push,fork,pull_request]
 jobs:
-  build:
+  slackNotification:
+    name: Slack Notification
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  
     steps:
+    - uses: actions/checkout@v2
     - name: Slack Notification
-      uses: act10ns/slack@v1
-      with: 
-        status: starting
-        channel: '#github-actions-test'
-        message: Starting Build and Deploy...
-      if: always()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        
+# name: GitHub Actions Demo
+# on: [push,fork,pull_request]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  
+#     steps:
+#     - name: Slack Notification
+#       uses: act10ns/slack@v1
+#       with: 
+#         status: starting
+#         channel: '#github-actions-test'
+#         message: Starting Build and Deploy...
+#       if: always()
 
-    - name: Slack Notification
-      uses: act10ns/slack@v1
-      with: 
-        status: ${{ job.status }}
-        channel: '#github-actions-test'
-        message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
-      if: always()
+#     - name: Slack Notification
+#       uses: act10ns/slack@v1
+#       with: 
+#         status: ${{ job.status }}
+#         channel: '#github-actions-test'
+#         message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
+#       if: always()
       
 #     - uses: ravsamhq/notify-slack-action@v2
 #       if: always()
@@ -29,3 +42,4 @@ jobs:
 #         status: ${{ job.status }} # required
 #       env:
 #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+
