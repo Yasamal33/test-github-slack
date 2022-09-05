@@ -3,13 +3,36 @@ on: [push,fork,pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
     steps:
-    - name: slack-send
-      uses: slackapi/slack-github-action@v1.21.0
-      id: slack
-      with:
-        channel-id: 'C0408NC1J95'
-        slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#     - name: slack-send
+#       uses: slackapi/slack-github-action@v1.21.0
+#       id: slack
+#       with:
+#         channel-id: 'C0408NC1J95'
+#         slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#       env:
+#         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+    - name: Slack Notification
+      uses: act10ns/slack@v1
+      with: 
+        status: starting
+        channel: '#github-actions-test'
+        message: Starting Build and Deploy...
+      if: always()
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Slack Notification
+      uses: act10ns/slack@v1
+      with: 
+        status: ${{ job.status }}
+        channel: '#github-actions-test'
+        message: Build {{ env.GITHUB_REF_NAME }} branch Successfully
+      if: always()
+      
+      
