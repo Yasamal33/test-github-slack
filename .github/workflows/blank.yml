@@ -5,10 +5,9 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
-
-    - name: Post to a Slack channel
-      id: slack
+    - name: slack-send
       uses: slackapi/slack-github-action@v1.21.0
+      id: slack
       with:
         channel-id: 'C0408NC1J95'
         slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
