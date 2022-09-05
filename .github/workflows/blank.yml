@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-on: [push]
+on: [push,fork,pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,10 +10,7 @@ jobs:
       id: slack
       uses: slackapi/slack-github-action@v1.21.0
       with:
-        # Slack channel id, channel name, or user id to post message.
-        # See also: https://api.slack.com/methods/chat.postMessage#channels
         channel-id: 'C0408NC1J95'
-        # For posting a simple plain text message
         slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
