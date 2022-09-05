@@ -31,4 +31,6 @@ jobs:
         status: ${{ job.status }} # required
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-
+    
+    - name: RazDvaTri
+      run: pwdd
