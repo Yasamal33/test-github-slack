@@ -3,16 +3,10 @@ on: [push,fork,pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  
     steps:
-    - name: Step to imitate failure
-      run: pwd
+    # - name: Step to imitate failure
+    #   run: pwdd
 
-    # - name: toJson
-    #   run: echo "${{ toJson(github) }}"
-      
     - name: Slack notification for common builds
       uses: ravsamhq/notify-slack-action@v2
       if: ${{ github.ref == 'refs/heads/main' }}
