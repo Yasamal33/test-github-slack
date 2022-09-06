@@ -33,8 +33,23 @@ jobs:
     #   env:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-    - name: Set tag
-      run: echo "git describe --tags" >> $GIT_TAG
+    # - name: Set tag
+    #   run: echo "git describe --tags" >> $GIT_TAG
+
+    # - name: Slack notification
+    #   uses: ravsamhq/notify-slack-action@v2
+    #   if: always()
+    #   with:
+    #     status: ${{ job.status }}
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     notification_title: "Build $GIT_TAG has {status_message}"
+    #     message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+    #     footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    # - name: Set tag
+    #   run: echo "git describe --tags" >> $GIT_TAG
 
     - name: Slack notification
       uses: ravsamhq/notify-slack-action@v2
@@ -42,7 +57,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Build $GIT_TAG has {status_message}"
+        notification_title: "Build ${{ GITHUB_REF_NAME }} has {status_message}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
       env:
