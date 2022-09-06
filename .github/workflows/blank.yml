@@ -7,61 +7,32 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   
     steps:
-    - name: RazDvaTri
+    - name: Step to imitate failure
       run: pwd
 
-#     - name: Slack Notification
-#       uses: ravsamhq/notify-slack-action@v2
-#       if: always()
-#       with:
-#         status: ${{ job.status }} # required
-#       env:
-#         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-    
     - name: toJson
       run: echo "${{ toJson(github) }}"
       
-    # - name: Slack notification
-    #   uses: ravsamhq/notify-slack-action@v2
-    #   if: always()
-    #   with:
-    #     status: ${{ job.status }}
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     notification_title: "{workflow} has {status_message}"
-    #     message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}> \n Build source: ${{ github.ref_type }} \n Reference: ${{ github.ref }} "
-    #     footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
-    #   env:
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    - name: Slack notification for common builds
+      uses: ravsamhq/notify-slack-action@v2
+      if: ${{ github.ref == 'refs/heads/main' }}
+      with:
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: "Build $GIT_TAG has {status_message}"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-    # - name: Set tag
-    #   run: echo "git describe --tags" >> $GIT_TAG
-
-    # - name: Slack notification
-    #   uses: ravsamhq/notify-slack-action@v2
-    #   if: always()
-    #   with:
-    #     status: ${{ job.status }}
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     notification_title: "Build $GIT_TAG has {status_message}"
-    #     message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
-    #     footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
-    #   env:
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-  
-    - name: GitHub Tag Name example
-      run: |
-          echo "$GITHUB_REF_NAME"
-          echo "${{  github.ref_name }}"
-
-    - name: Slack notification
+    - name: Slack notification for releases
       uses: ravsamhq/notify-slack-action@v2
       if: always()
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
         notification_title: "*{workflow}* {status_message} in <{repo_url}|{repo}>"
-        message_format: "{emoji} Build ${{  github.ref_name }} has {status_message}"
+        message_format: "{emoji} Build ${{ github.ref_name }} has {status_message}"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
