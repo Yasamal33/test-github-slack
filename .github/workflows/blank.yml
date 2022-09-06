@@ -51,8 +51,8 @@ jobs:
   
     - name: GitHub Tag Name example
       run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+          echo "$GITHUB_REF_NAME"
+          echo "${{  github.ref_name }}"
 
     - name: Slack notification
       uses: ravsamhq/notify-slack-action@v2
@@ -60,7 +60,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Build ${{ env.GITHUB_REF }} has {status_message}"
+        notification_title: "Build $GITHUB_REF_NAME has {status_message}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
       env:
