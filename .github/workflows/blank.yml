@@ -34,7 +34,7 @@ jobs:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     - name: Set tag
-      run: echo "gis describe --tags" >> $GIT_TAG
+      run: echo "git describe --tags" >> $GIT_TAG
 
     - name: Slack notification
       uses: ravsamhq/notify-slack-action@v2
