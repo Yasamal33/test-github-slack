@@ -27,7 +27,7 @@ jobs:
 
     - name: Slack notification for releases
       uses: ravsamhq/notify-slack-action@v2
-      if: always()
+      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
