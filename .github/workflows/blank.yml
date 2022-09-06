@@ -42,7 +42,7 @@ jobs:
       with:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        notification_title: "Build ${{ GIT_ENV }} has {status_message}"
+        notification_title: "Build ${{ GIT_TAG }} has {status_message}"
         message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
       env:
