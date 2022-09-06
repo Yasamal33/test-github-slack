@@ -10,8 +10,8 @@ jobs:
     - name: Step to imitate failure
       run: pwd
 
-    - name: toJson
-      run: echo "${{ toJson(github) }}"
+    # - name: toJson
+    #   run: echo "${{ toJson(github) }}"
       
     - name: Slack notification for common builds
       uses: ravsamhq/notify-slack-action@v2
