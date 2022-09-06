@@ -48,6 +48,11 @@ jobs:
     #   env:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+  
+    - name: GitHub Tag Name example
+      run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
     - name: Slack notification
       uses: ravsamhq/notify-slack-action@v2
