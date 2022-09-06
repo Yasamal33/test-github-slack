@@ -17,7 +17,10 @@ jobs:
 #         status: ${{ job.status }} # required
 #       env:
 #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-        
+    
+    - name: toJson
+      run: echo "${{ toJson(github) }}"
+      
     - name: Slack notification
       uses: ravsamhq/notify-slack-action@v2
       if: always()
@@ -25,9 +28,9 @@ jobs:
         status: ${{ job.status }}
         token: ${{ secrets.GITHUB_TOKEN }}
         notification_title: "{workflow} has {status_message}"
-        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+        message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}> ${{ github.event.head_commit.message }}"
         footer: "Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+        
   
